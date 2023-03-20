@@ -31,15 +31,15 @@ function App() {
 
     // Display Searched Meals
    const getSearchedMeals = (e) => {
-  e.preventDefault();
-  if (searchMeal !== "") {
-    const searched = meals.filter(meal =>
-      meal.title.toLowerCase().includes(searchMeal.toLowerCase())
-    );
-    setShowMeals(true);
-    setMeals(searched);
-    }
-};
+    e.preventDefault();
+    if (searchMeal !== "") {
+        const searched = meals.filter(meal =>
+        meal.title.toLowerCase().includes(searchMeal.toLowerCase())
+        );
+        setShowMeals(true);
+        setMeals(searched);
+        }
+    };
 
     // filter by category
     const [selected, setSelected] = useState([]);
@@ -54,16 +54,10 @@ function App() {
             setSelected((pre) => [...pre.filter((item) => item !== value)]);
         }
     };
-
-    useEffect(() => {
-        const filtered = meals.filter((item) =>
-            selected.includes(item.category)
-        );
-        setMeals(filtered);
-    }, [selected]);
-
-  // Filter By Rate
-  
+    
+    const filtered = (selected.length === 0) ? meals 
+                        : meals.filter(meal => selected.includes(meal.category))
+    
   return (
     <div className="container">
             <Search
@@ -78,7 +72,7 @@ function App() {
                         handleCheck={handleCheck}
                     />
                 )}
-                {showMeals && <Meals meals={meals} searchMeal={searchMeal} />}
+                {showMeals && <Meals meals={filtered} searchMeal={searchMeal} />}
             </div>
         </div>
   );
