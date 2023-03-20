@@ -1,8 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import FilterMeal from "./FilterMeal";
 import Meals from "./Meals";
 import Search from "./Search";
+import ReactPaginate from 'react-paginate';
 
 function App() {
   const [searchMeal, setSearchMeal] = useState("");
@@ -58,7 +58,15 @@ function App() {
     const filtered = (selected.length === 0) ? meals 
                         : meals.filter(meal => selected.includes(meal.category))
 
-
+    // Pagination
+    const [pageNumber, setPageNumber] = useState(0);
+    const mealsPerPage = 6;
+    const pagesVisited = pageNumber * mealsPerPage;
+    const displayMeals = filtered.slice(pagesVisited, pagesVisited+mealsPerPage)
+    const pagesCount = Math.ceil(filtered.length / mealsPerPage)
+    const handlePageClick = ({selected}) => {
+        setPageNumber(selected)
+    }
   return (
     <div className="container">
             <Search
@@ -73,8 +81,35 @@ function App() {
                         handleCheck={handleCheck}
                     />
                 )}
-                {showMeals && <Meals meals={filtered} searchMeal={searchMeal} />}
+                {
+                    showMeals && <Meals 
+                                    meals={displayMeals} 
+                                    searchMeal={searchMeal} 
+                                />
+                }
             </div>
+            {
+                showMeals && <ReactPaginate
+                                breakLabel = "..."
+                                nextLabel = "next"
+                                onPageChange = {handlePageClick}
+                                pageRangeDisplayed = {5}
+                                pageCount = {pagesCount}
+                                previousLabel = "previous"
+                                renderOnZeroPageCount = {null}
+                                containerClassName = {'pagination'}
+                                nextClassName = {'page-item'}
+                                nextLinkClassName = {'page-link'}
+                                previousClassName = {'page-item'}
+                                previousLinkClassName = {'page-link'}
+                                breakClassName = {'page-item'}
+                                breakLinkClassName = {'page-link'}
+                                pageClassName = {'page-item'}
+                                pageLinkClassName = {'page-link'}
+                                activeClassName = {'active'}
+
+                            />
+            }
         </div>
   );
 }
