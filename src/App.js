@@ -57,7 +57,8 @@ function App() {
     
     const filtered = (selected.length === 0) ? meals 
                         : meals.filter(meal => selected.includes(meal.category))
-    
+
+
   return (
     <div className="container">
             <Search

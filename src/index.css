@@ -104,3 +104,12 @@ input.category-input {
   margin-right: 5px;
   cursor: pointer;
 }
+
+/* pagination */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin-top: 20px;
+  list-style: none;
+}

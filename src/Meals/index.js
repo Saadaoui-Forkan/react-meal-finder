@@ -1,11 +1,9 @@
 import React from 'react'
 
-function Meals({meals, searchMeal}) {
+function Meals({meals}) {
+  
   return (
     <>
-      {/* <div className='result-heading'>
-        <h2>Search results for </h2>
-      </div> */}
       <div className='meals'>
         {
           meals.map(meal => (
